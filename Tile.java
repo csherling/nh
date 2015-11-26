@@ -1,6 +1,6 @@
 public class Tile{
 
-    private String sprite;
+    protected String sprite;
 
     public Tile(String x){
 	sprite = x;

@@ -1,6 +1,6 @@
 public class Character extends Tile{
 
-    //protected String name;
+    protected String name;
     protected int hp;
     protected int strength;
     protected int defense;
@@ -8,21 +8,21 @@ public class Character extends Tile{
 
     public Character(){
 	// Sets attributes;
-	//name = "Leroy";
 	super("@");
+	name = "Thing";
 	hp = 125;
 	strength = 100;
 	defense = 40;
 	attack = 0.4;
     }
 
-    public Character(String newSprite){
-	super(newSprite);
+    public Character(String newName){
+	super("@");
 	hp = 125;
 	strength = 100;
 	defense = 40;
 	attack = 0.4;
-	//name = newName;
+	name = newName;
     }
 	
     public  boolean isAlive(){
@@ -56,10 +56,10 @@ public class Character extends Tile{
 	attack+=1;
     }
     
-   //  public String about(Character dude){
+   //  public String about(){
    // 	String info = "";
    // 	info += "Name: " + name + "\n";
-   // 	info += "Class: " + dude + "\n";
+   // 	//info += "Class: " + dude + "\n";
    // 	info += "hp: " + hp + "\n";
    // 	info += "Strength: " + strength + "\n";
    // 	info += "Defense: " + defense + "\n";

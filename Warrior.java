@@ -1,17 +1,12 @@
-/*
-  Team GitRekt - Sachal Malick, Vincent Alykin, Christopher Sherling
-  APCS1 pd5
-  HW30 -- Ye Olde Role Playing Game Expanded
-  2015-11-15
-*/
-
-
 public class Warrior extends Character{
 
-    private String name;
+
+    public Warrior(){
+	// Sets attributes
+	super();
+    }
 
     public Warrior(String newName){
-	// Sets attributes
 	super(newName);
     }
 	
