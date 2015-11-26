@@ -2,16 +2,17 @@ import java.util.Scanner;
 
 public class Base{
 
-    private String[][] field;
+    private Tile[][] field;
     private int rcor;
     private int ccor;
 
     public Base(){
-	field = new String[5][5];
+	field = new Tile[5][5];
 	rcor = 2;
 	ccor = 2;
 	populate();
-	field[2][2] = "@";
+	Tile temp = new Tile("@");
+	field[2][2] = temp;
     }
 
     public int getRcor(){
@@ -28,14 +29,16 @@ public class Base{
     }
 
     public void populate(){
+	Tile te = new Tile(".");
 	for(int i=0; i<field.length; i++){
-	    for(int j=0; j<field[i].length; j++)
-	 	this.field[i][j] = ".";	    
+	    for(int j=0; j<field[i].length; j++){	
+	 	this.field[i][j] = te;	    
+	    }
 	}
     }
 
     public void swap( int i, int j, int k, int l ) {
-	String extra = field[i][j];
+	Tile extra = field[i][j];
 	field[i][j] = field[k][l];
 	field[k][l] = extra;
     }
@@ -47,9 +50,9 @@ public class Base{
     }
 
     public void print2() {
-    	String [] [] a = this.field;
-    	for (String [] s: a) {
-    	    for (String x: s) {
+    	Tile [] [] a = this.field;
+    	for (Tile [] s: a) {
+    	    for (Tile x: s) {
     		System.out.print(x);
     	    }
     		
