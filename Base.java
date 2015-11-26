@@ -62,31 +62,49 @@ public class Base{
 	Boolean x = false;
 
 	String dir = "";
-
+	String op = "";
 
 	while(x == false){
 	    this.print2();
-	    System.out.println("Which Way Do You Want To Move? (u/d/l/r)");
+	    System.out.println("What do you want to do? m/q");
 	    if(s.hasNext()){
-		dir = s.nextLine();
+		op = s.nextLine();
 	    }
 	    
-	    if(dir.equals("u")){
-		move(getRcor(),getCcor(), -1, 0);
+	    if(op.equals("m")){
+		System.out.println("Which Way Do You Want To Move? (u/d/l/r/ul/ur/dl/dr)");
+		if(s.hasNext()){
+		    dir = s.nextLine();
+		}
+	    
+		if(dir.equals("u")){
+		    move(getRcor(),getCcor(), -1, 0);
+		}
+		if(dir.equals("d")){
+		    move(getRcor(),getCcor(), 1, 0);
+		}
+		if(dir.equals("l")){
+		    move(getRcor(),getCcor(), 0, -1);
+		}
+		if(dir.equals("r")){
+		    move(getRcor(),getCcor(), 0, 1);
+		}
+		if(dir.equals("ul")){
+		    move(getRcor(),getCcor(), -1, -1);
+		}
+		if(dir.equals("ur")){
+		    move(getRcor(),getCcor(), -1, 1);
+		}
+		if(dir.equals("dl")){
+		    move(getRcor(),getCcor(), 1, -1);
+		}
+		if(dir.equals("dr")){
+		    move(getRcor(),getCcor(), 1, 1);
+		}
 	    }
-
-	    if(dir.equals("d")){
-		move(getRcor(),getCcor(), 1, 0);
+	    if(op.equals("q")){
+		break;
 	    }
-
-	    if(dir.equals("l")){
-		move(getRcor(),getCcor(), 0, -1);
-	    }
-
-	    if(dir.equals("r")){
-		move(getRcor(),getCcor(), 0, 1);
-	    }
-
 	}
 
     }
