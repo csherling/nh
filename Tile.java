@@ -1,13 +1,32 @@
 public class Tile{
 
     protected String sprite;
+    protected boolean canWalk;
 
     public Tile(String x){
 	sprite = x;
+	canWalk = false;
+    }
+
+    public Tile (String x, boolean walk){
+	sprite = x;
+	canWalk = walk;
+    }
+
+    public void setCanWalk(boolean walk){
+	canWalk = walk;
+    }
+
+    public boolean getCanWalk(){
+	return canWalk;
     }
 
     public void setSprite(String newSprite){
 	sprite = newSprite;
+    }
+
+    public String getSprite(){
+	return sprite;
     }
     public String toString(){
 	String info = sprite;

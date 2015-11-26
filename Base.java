@@ -8,12 +8,14 @@ public class Base{
     private Character you;
 
     public Base(){
-	field = new Tile[5][5];
+	field = new Tile[9][9];
 	rcor = 2;
 	ccor = 2;
 	populate();
 	Character temp = new Character();
 	field[2][2] = temp;
+	Wall tem = new Wall();
+	field[3][3] = tem;
     }
 
     public int getRcor(){
@@ -30,11 +32,18 @@ public class Base{
     }
 
     public void populate(){
-	Tile te = new Tile(".");
+	Floor te = new Floor();
+	Wall wa = new Wall();
 	for(int i=0; i<field.length; i++){
 	    for(int j=0; j<field[i].length; j++){	
 	 	this.field[i][j] = te;	    
 	    }
+	}
+	for(int k=0; k<9; k++){
+	    this.field[k][0] = wa;
+	    this.field[k][8] = wa;
+	    this.field[0][k] = wa;
+	    this.field[8][k] = wa;
 	}
     }
 
@@ -45,9 +54,14 @@ public class Base{
     }
 
     public void move( int a, int b, int c, int d){
-	swap(a, b, a + c, b + d);
-	setRcor(a + c);
-	setCcor(b + d);
+	if(field[a+c][b+d].getSprite().equals(".")){
+	    swap(a, b, a + c, b + d);
+	    setRcor(a + c);
+	    setCcor(b + d);
+	}
+	else{
+	    System.out.println("Can't move there");
+	}
     }
 
     public void print2() {
@@ -110,6 +124,7 @@ public class Base{
 	String op = "";
 
 	while(x == false){
+	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	    this.print2();
 	    System.out.println(cclass + " " + name + ", What do you want to do? m/q");
 	    if(s.hasNext()){
