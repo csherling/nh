@@ -1,38 +1,90 @@
 public class Monster extends Tile{
     
     protected String name;
+    protected int rcor;
+    protected int ccor;
     protected int hp;
-    protected int strength;
     protected int defense;
-    protected double attack;
+    protected int attack;
+    protected int rage;
 
     public Monster () {
 	super("M");
 	name = "Monster";
 	hp = 10;
-	strength = 10;
-	defense = 4;
-	attack = 0.1;
+	defense = 2;
+	attack = 5;
+	rage = (int)(Math.random() * 3) - 1;
     }
 
-    public Monster (String newName) {
+    // public Monster (String newName) {
+    // 	super("M");
+    // 	name = newName;
+    // 	hp = 10;
+    // 	defense = 2;
+    // 	attack = 5;
+    // 	rage = (int)(Math.random() * 3) - 1;
+    // }
+
+    // public Monster (String newSprite, String newName) {
+    // 	super(newSprite);
+    // 	name = newName;
+    // 	hp = 10;
+    // 	defense = 2;
+    // 	attack = 5;
+    // 	rage = (int)(Math.random() * 3) - 1;
+    // }
+
+    // public Monster (String newSprite, String newName, int newr, int newc) {
+    // 	super(newSprite);
+    // 	name = newName;
+    // 	hp = 10;
+    // 	defense = 2;
+    // 	attack = 5;
+    // 	rcor = newr;
+    // 	ccor = newc;
+    // 	rage = (int)(Math.random() * 3) - 1;
+    // }
+
+    public Monster (int newr, int newc) {
 	super("M");
-	name = newName;
+	name = "Monster";
 	hp = 10;
-	strength = 10;
-	defense = 4;
-	attack = 0.1;
+	defense = 2;
+	attack = 5;
+	rcor = newr;
+	ccor = newc;
+	rage = (int)(Math.random() * 4) - 1;
     }
 
-    public Monster (String newSprite, String newName) {
-	super(newSprite);
-	name = newName;
-	hp = 10;
-	strength = 10;
-	defense = 4;
-	attack = 0.1;
+    public int attack(Character foe){
+    	int damage;
+    	damage = attack - foe.getDefense();
+    	foe.lowerHP(damage);
+    	return damage;
+    }
+
+
+    public int getRcor(){
+	return rcor;
+    }
+    public int getCcor(){
+	return ccor;
+    }
+    public int getRage(){
+	return rage;
+    }
+    public void setRcor(int newRcor){
+	rcor = newRcor;
+    }
+    public void setCcor(int newCcor){
+	ccor = newCcor;
+    }
+    public void die(){
+	hp = 0;
     }
 	
+    
     // public void setStrength(int newStrength){
     // 	strength = newStrength;
     // }
@@ -41,21 +93,21 @@ public class Monster extends Tile{
     // 	strength = -100;
     // }
 
-    // public  boolean isAlive(){
-    // 	return hp > 0; // If the "hp" is above 0, return true;
-    // }
+    public  boolean isAlive(){
+	return hp > 0; // If the "hp" is above 0, return true;
+    }
 
-    // public int getDefense(){
-    // 	return defense; // returns the defense
-    // }
+    public int getDefense(){
+    	return defense; // returns the defense
+    }
 
     // public String getName(){
     // 	return name; // returns  the name
     // }
 
-    // public void lowerHP(int dmg){
-    // 	hp -= dmg; // returns the "hp" after the "damage" has been applied
-    // }
+    public void lowerHP(int dmg){
+    	hp -= dmg; // returns the "hp" after the "damage" has been applied
+    }
 
     // public int attack(Warrior war){
     // 	int damage;

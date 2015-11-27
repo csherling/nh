@@ -3,36 +3,20 @@ import java.util.Scanner;
 public class Base{
 
     private Tile[][] field;
-    private int rcor;
-    private int ccor;
-    private Character you;
+    private Character you = new Character();
     private Floor flo;
+    private String name;
+    private String cclass;
+    private Wall wal = new Wall();
+    private Monster mon = new Monster(4, 4);
 
     public Base(){
 	field = new Tile[9][9];
 	flo = new Floor();
-	rcor = 2;
-	ccor = 2;
 	populate();
-	Character temp = new Character();
-	field[2][2] = temp;
-	Wall tem = new Wall();
-	field[3][3] = tem;
-	Monster mon = new Monster();
+	field[2][2] = you;
+	field[3][3] = wal;
 	field[4][4] = mon;
-    }
-
-    public int getRcor(){
-	return rcor;
-    }
-    public int getCcor(){
-	return ccor;
-    }
-    public void setRcor(int newRcor){
-	rcor = newRcor;
-    }
-    public void setCcor(int newCcor){
-	ccor = newCcor;
     }
 
     public void populate(){
@@ -57,20 +41,139 @@ public class Base{
 	field[k][l] = extra;
     }
 
-    public void move( int a, int b, int c, int d){
+    public void move(int c, int d){
+	int a = you.getRcor();
+	int b = you.getCcor();
 	if(field[a+c][b+d].getSprite().equals(".")){
 	    swap(a, b, a + c, b + d);
-	    setRcor(a + c);
-	    setCcor(b + d);
+	    you.setRcor(a + c);
+	    you.setCcor(b + d);
 	}
 	else{
 	    System.out.println("Can't move there");
 	}
     }
 
-    public void kill( int a, int b, int c, int d){
+    public void monMove(int c, int d){
+	int a = mon.getRcor();
+	int b = mon.getCcor();
+	if(field[a+c][b+d].getSprite().equals(".")){
+	    swap(a, b, a + c, b + d);
+	    mon.setRcor(a + c);
+	    mon.setCcor(b + d);
+	}
+	else{
+	    System.out.println("Can't move there");
+	}
+    }
+
+    public void chaseMonMove(){
+	if(!((mon.getRcor() - you.getRcor() <= 1) 
+	   && (mon.getRcor() - you.getRcor() >= -1)
+	   && (mon.getCcor() - you.getCcor() <= 1)
+	     && (mon.getCcor() - you.getCcor() >= -1))){
+
+	    if(mon.getRcor() - you.getRcor() >= 1){
+		monMove(-1, 0);
+	    }
+	    if(mon.getRcor() - you.getRcor() <= -1){
+		monMove(1, 0);
+	    }
+	    if(mon.getCcor() - you.getCcor() >= 1){
+		monMove(0, -1);
+	    }
+	    if(mon.getCcor() - you.getCcor() <= -1){
+		monMove(0, 1);
+	    }
+	}
+	else{
+	    mon.attack(you);
+	    you.attack(mon);
+	}
+    }
+
+    public void aggMonMove(){
+	if((mon.getRcor() - you.getRcor() <= 1) 
+	   && (mon.getRcor() - you.getRcor() >= -1)
+	   && (mon.getCcor() - you.getCcor() <= 1)
+	   && (mon.getCcor() - you.getCcor() >= -1)){
+
+	    if(mon.getRcor() - you.getRcor() <= 1
+	       && (mon.getRcor() - you.getRcor() > 0) ){
+		mon.attack(you);
+		you.attack(mon);
+	    }
+	    if(mon.getRcor() - you.getRcor() >= -1
+	       && (mon.getRcor() - you.getRcor() < 0) ){
+		mon.attack(you);
+		you.attack(mon);
+	    }
+	    if(mon.getCcor() - you.getCcor() <= 1
+	       && (mon.getCcor() - you.getCcor() > 0) ){
+		mon.attack(you);
+		you.attack(mon);
+	    }
+	    if(mon.getCcor() - you.getCcor() >= -1
+	       && (mon.getCcor() - you.getCcor() < 0) ){
+		mon.attack(you);
+		you.attack(mon);
+	    }
+	}
+	else{
+	    monMove((int)(Math.random() * 3) - 1, (int)(Math.random() * 3) - 1);
+	}
+    }
+
+    public void evasiveMonMove(){
+	if(((mon.getRcor() - you.getRcor() <= 1) 
+	    && (mon.getRcor() - you.getRcor() > 0)) 
+	   || ((mon.getRcor() - you.getRcor() >= -1)
+	    && (mon.getRcor() - you.getRcor() < 0)) 
+	   || ((mon.getCcor() - you.getCcor() <= 1)
+	    && (mon.getCcor() - you.getCcor() > 0)) 
+	   || ((mon.getCcor() - you.getCcor() >= -1)//could use abs
+	    && (mon.getCcor() - you.getCcor() < 0))){
+
+	    if(mon.getRcor() - you.getRcor() <= 1
+	       && (mon.getRcor() - you.getRcor() > 0) ){
+		monMove(1, 0);
+	    }
+	    if(mon.getRcor() - you.getRcor() >= -1
+	       && (mon.getRcor() - you.getRcor() < 0) ){
+		monMove(-1, 0);
+	    }
+	    if(mon.getCcor() - you.getCcor() <= 1
+	       && (mon.getCcor() - you.getCcor() > 0) ){
+		monMove(0, 1);
+	    }
+	    if(mon.getCcor() - you.getCcor() >= -1
+	       && (mon.getCcor() - you.getCcor() < 0) ){
+		monMove(0, -1);
+	    }
+	}
+	else{
+	    monMove((int)(Math.random() * 3) - 1, (int)(Math.random() * 3) - 1);
+	}
+    }
+
+    public void kill(int c, int d){
+	int a = you.getRcor();
+	int b = you.getCcor();
 	if(field[a+c][b+d].getSprite().equals("M")){
 	    field[a + c][b + d] = flo;
+	    mon.die();
+	}
+	else{
+	    System.out.println("You strike the air");
+	}
+    }
+
+    public void fight(int c, int d, Monster m){
+	int a = you.getRcor();
+	int b = you.getCcor();
+	if(field[a+c][b+d].getSprite().equals("M")){
+	    you.attack(m);
+	    m.attack(you);
 	}
 	else{
 	    System.out.println("You strike the air");
@@ -88,32 +191,20 @@ public class Base{
     	} 
     }
 
-    public void play(){
+    public void setup(){
 	Scanner s = new Scanner(System.in);
 	String g;
-	String name = "";
 	int character = 0;
-	// s = "Welcome to Ye Olde RPG!\n";
-
-	// s += "\nChoose your difficulty: \n";
-	// s += "\t1: Easy\n";
-	// s += "\t2: Not so easy\n";
-	// s += "\t3: Beowulf hath nothing on me. Bring it on.\n";
-	// s += "Selection: ";
-	// System.out.print( s );
-
-	// try {
-	//     difficulty = Integer.parseInt( in.readLine() );
-	// }
-	//catch ( IOException e ) { }
 
 	g = "(State your name): ";
 	System.out.print( g );
 
 	if(s.hasNext()){
-	    name = s.nextLine();
+	    name = (s.nextLine());
 	}
 	
+	
+
 	g = "What are ya?: Choose \n (1) Warrior \n (2) Archer \n";
 	System.out.print( g );
 	
@@ -121,7 +212,6 @@ public class Base{
 	    character = Integer.parseInt( s.nextLine() );
 	}
 	//instantiate the player's character
-	String cclass = "";
 	if (character == 1) {
 	    you = new Warrior( name );
 	    cclass = "Warrior";
@@ -131,15 +221,17 @@ public class Base{
 	    cclass = "Archer";
 	}
 
-	Boolean x = false;
+    }
 
+    public void turn(){
+	Scanner s = new Scanner(System.in);
 	String dir = "";
 	String op = "";
 
-	while(x == false){
+	while(you.isAlive()){
 	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	    this.print2();
-	    System.out.println(cclass + " " + name + ", What do you want to do? m/k/q");
+	    System.out.println(mon.getRage() + cclass + " " + name + ", What do you want to do? m/k/a/q");
 	    if(s.hasNext()){
 		op = s.nextLine();
 	    }
@@ -151,28 +243,60 @@ public class Base{
 		}
 	    
 		if(dir.equals("u")){
-		    kill(getRcor(),getCcor(), -1, 0);
+		    kill(-1, 0);
 		}
 		if(dir.equals("d")){
-		    kill(getRcor(),getCcor(), 1, 0);
+		    kill(1, 0);
 		}
 		if(dir.equals("l")){
-		    kill(getRcor(),getCcor(), 0, -1);
+		    kill(0, -1);
 		}
 		if(dir.equals("r")){
-		    kill(getRcor(),getCcor(), 0, 1);
+		    kill(0, 1);
 		}
 		if(dir.equals("ul")){
-		    kill(getRcor(),getCcor(), -1, -1);
+		    kill(-1, -1);
 		}
 		if(dir.equals("ur")){
-		    kill(getRcor(),getCcor(), -1, 1);
+		    kill(-1, 1);
 		}
 		if(dir.equals("dl")){
-		    kill(getRcor(),getCcor(), 1, -1);
+		    kill(1, -1);
 		}
 		if(dir.equals("dr")){
-		    kill(getRcor(),getCcor(), 1, 1);
+		    kill(1, 1);
+		}
+	    }
+
+	    if(op.equals("a")){
+		System.out.println("Which Way Do You Want To Attack? (u/d/l/r/ul/ur/dl/dr)");
+		if(s.hasNext()){
+		    dir = s.nextLine();
+		}
+	    
+		if(dir.equals("u")){
+		    fight(-1, 0, mon);
+		}
+		if(dir.equals("d")){
+		    fight(1, 0, mon);
+		}
+		if(dir.equals("l")){
+		    fight(0, -1, mon);
+		}
+		if(dir.equals("r")){
+		    fight(0, 1, mon);
+		}
+		if(dir.equals("ul")){
+		    fight(-1, -1, mon);
+		}
+		if(dir.equals("ur")){
+		    fight(-1, 1, mon);
+		}
+		if(dir.equals("dl")){
+		    fight(1, -1, mon);
+		}
+		if(dir.equals("dr")){
+		    fight(1, 1, mon);
 		}
 	    }
 
@@ -183,35 +307,57 @@ public class Base{
 		}
 	    
 		if(dir.equals("u")){
-		    move(getRcor(),getCcor(), -1, 0);
+		    move(-1, 0);
 		}
 		if(dir.equals("d")){
-		    move(getRcor(),getCcor(), 1, 0);
+		    move(1, 0);
 		}
 		if(dir.equals("l")){
-		    move(getRcor(),getCcor(), 0, -1);
+		    move(0, -1);
 		}
 		if(dir.equals("r")){
-		    move(getRcor(),getCcor(), 0, 1);
+		    move(0, 1);
 		}
 		if(dir.equals("ul")){
-		    move(getRcor(),getCcor(), -1, -1);
+		    move(-1, -1);
 		}
 		if(dir.equals("ur")){
-		    move(getRcor(),getCcor(), -1, 1);
+		    move(-1, 1);
 		}
 		if(dir.equals("dl")){
-		    move(getRcor(),getCcor(), 1, -1);
+		    move(1, -1);
 		}
 		if(dir.equals("dr")){
-		    move(getRcor(),getCcor(), 1, 1);
+		    move(1, 1);
 		}
 	    }
 
 	    if(op.equals("q")){
 		break;
 	    }
+	    if(mon.isAlive()){
+		if(mon.getRage() == -1){
+		    evasiveMonMove();
+		}
+		if(mon.getRage() == 0){
+		    monMove((int)(Math.random() * 3) - 1, (int)(Math.random() * 3) - 1);
+		}
+		if(mon.getRage() == 1){
+		    aggMonMove();
+		}
+		if(mon.getRage() == 2){
+		    chaseMonMove();
+		}
+	    }
+	    else{
+		field[mon.getRcor()][mon.getCcor()] = flo;
+	    }
 	}
+    }
+
+    public void play(){
+	setup();
+	turn();
 
     }
     public static void main(String[] args){

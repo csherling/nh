@@ -6,17 +6,15 @@ public class Archer extends Character{
 	// Sets attributes
 	super();
 	hp = 75;
-	strength = 200;
 	defense = 25;
-	attack = 0.5;
+	attack = 4;
     }
     public Archer(String newName){
 	// Sets attributes
 	super(newName);
 	hp = 75;
-	strength = 200;
 	defense = 25;
-	attack = 0.5;
+	attack = 4;
     }
 	
     // public  boolean isAlive(){
