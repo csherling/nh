@@ -83,6 +83,10 @@ public class Character extends Tile{
     public String getcclass(){
 	return cclass;
     }
+    public int getHP(){
+	return hp;
+    }
+    
 
    //  public String about(){
    // 	String info = "";

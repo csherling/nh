@@ -7,6 +7,7 @@ public class Monster extends Tile{
     protected int defense;
     protected int attack;
     protected int rage;
+    protected boolean life = true;
 
     public Monster () {
 	super("M");
@@ -74,6 +75,15 @@ public class Monster extends Tile{
     public int getRage(){
 	return rage;
     }
+    public void setHp(int newHP){
+	hp = newHP;
+    }
+    public void setLife(boolean newLife){
+	life = newLife;
+    }
+    public void setRage(int newRage){
+	rage = newRage;
+    }
     public void setRcor(int newRcor){
 	rcor = newRcor;
     }
@@ -82,7 +92,15 @@ public class Monster extends Tile{
     }
     public void die(){
 	hp = 0;
+	life = false;
     }
+    // public void revive(){
+    // 	mon.setRcor(4);
+    // 	mon.setRcor(4);
+    // 	Base.field[4][4] = Base.mon;
+    // 	hp = 10;
+    // 	rage = (int)(Math.random() * 4) - 1;
+    // }
 	
     
     // public void setStrength(int newStrength){
@@ -94,7 +112,17 @@ public class Monster extends Tile{
     // }
 
     public  boolean isAlive(){
-	return hp > 0; // If the "hp" is above 0, return true;
+	lsetter();
+	return life; // If the "hp" is above 0, return true;
+    }
+
+    public void lsetter(){
+	if(hp > 0){
+	    life = true;
+	}
+	else{
+	    life = false;
+	}
     }
 
     public int getDefense(){

@@ -7,31 +7,32 @@ public class Base{
     private Floor flo;
     private String name;
     private String cclass;
-    private Wall wal = new Wall();
+    private Dwall dwal = new Dwall();
+    private Lwall lwal = new Lwall();
     private Monster mon = new Monster(4, 4);
+    private Monster mon1 = new Monster(4, 4);
 
     public Base(){
 	field = new Tile[9][9];
 	flo = new Floor();
 	populate();
 	field[2][2] = you;
-	field[3][3] = wal;
+	field[3][3] = dwal;
 	field[4][4] = mon;
     }
 
     public void populate(){
 	Floor te = new Floor();
-	Wall wa = new Wall();
 	for(int i=0; i<field.length; i++){
 	    for(int j=0; j<field[i].length; j++){	
 	 	this.field[i][j] = te;	    
 	    }
 	}
 	for(int k=0; k<9; k++){
-	    this.field[k][0] = wa;
-	    this.field[k][8] = wa;
-	    this.field[0][k] = wa;
-	    this.field[8][k] = wa;
+	    this.field[k][0] = lwal;
+	    this.field[k][8] = lwal;
+	    this.field[0][k] = lwal;
+	    this.field[8][k] = lwal;
 	}
     }
 
@@ -231,11 +232,17 @@ public class Base{
 	while(you.isAlive()){
 	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	    this.print2();
-	    System.out.println(mon.getRage() + cclass + " " + name + ", What do you want to do? m/k/a/q");
+	    System.out.println(mon.getRage() + " " + cclass + " " + name + " " + you.getHP());
+	    System.out.println("What do you want to do? m/k/a/q");
+
+	    // if(op.equals("s")){
+	    // 	spawnMon();
+	    // }
+	    
 	    if(s.hasNext()){
 		op = s.nextLine();
 	    }
-	    
+
 	    if(op.equals("k")){
 		System.out.println("Which Way Do You Want To Kill? (u/d/l/r/ul/ur/dl/dr)");
 		if(s.hasNext()){
@@ -351,6 +358,11 @@ public class Base{
 	    }
 	    else{
 		field[mon.getRcor()][mon.getCcor()] = flo;
+		mon = mon1;
+		mon.setRage((int)(Math.random()*4) - 1);
+		field[4][4] = mon;
+		mon.setHp(10);
+		mon.setLife(true);
 	    }
 	}
     }
