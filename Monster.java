@@ -1,25 +1,45 @@
-/*
-  Team GitRekt - Sachal Malick, Vincent Alykin, Christopher Sherling
-  APCS1 pd5
-  HW30 -- Ye Olde Role Playing Game Expanded
-  2015-11-15
-*/
-
-public class Monster extends Character{
-
-
+public class Monster extends Tile{
     
+    protected String name;
+    protected int hp;
+    protected int strength;
+    protected int defense;
+    protected double attack;
+
     public Monster () {
-	super();
+	super("M");
+	name = "Monster";
+	hp = 10;
+	strength = 10;
+	defense = 4;
+	attack = 0.1;
+    }
+
+    public Monster (String newName) {
+	super("M");
+	name = newName;
+	hp = 10;
+	strength = 10;
+	defense = 4;
+	attack = 0.1;
+    }
+
+    public Monster (String newSprite, String newName) {
+	super(newSprite);
+	name = newName;
+	hp = 10;
+	strength = 10;
+	defense = 4;
+	attack = 0.1;
     }
 	
-    public void setStrength(int newStrength){
-	strength = newStrength;
-    }
+    // public void setStrength(int newStrength){
+    // 	strength = newStrength;
+    // }
 
-    public void confuse(){
-	strength = -100;
-    }
+    // public void confuse(){
+    // 	strength = -100;
+    // }
 
     // public  boolean isAlive(){
     // 	return hp > 0; // If the "hp" is above 0, return true;

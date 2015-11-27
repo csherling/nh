@@ -6,9 +6,11 @@ public class Base{
     private int rcor;
     private int ccor;
     private Character you;
+    private Floor flo;
 
     public Base(){
 	field = new Tile[9][9];
+	flo = new Floor();
 	rcor = 2;
 	ccor = 2;
 	populate();
@@ -16,6 +18,8 @@ public class Base{
 	field[2][2] = temp;
 	Wall tem = new Wall();
 	field[3][3] = tem;
+	Monster mon = new Monster();
+	field[4][4] = mon;
     }
 
     public int getRcor(){
@@ -61,6 +65,15 @@ public class Base{
 	}
 	else{
 	    System.out.println("Can't move there");
+	}
+    }
+
+    public void kill( int a, int b, int c, int d){
+	if(field[a+c][b+d].getSprite().equals("M")){
+	    field[a + c][b + d] = flo;
+	}
+	else{
+	    System.out.println("You strike the air");
 	}
     }
 
@@ -126,11 +139,43 @@ public class Base{
 	while(x == false){
 	    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	    this.print2();
-	    System.out.println(cclass + " " + name + ", What do you want to do? m/q");
+	    System.out.println(cclass + " " + name + ", What do you want to do? m/k/q");
 	    if(s.hasNext()){
 		op = s.nextLine();
 	    }
 	    
+	    if(op.equals("k")){
+		System.out.println("Which Way Do You Want To Kill? (u/d/l/r/ul/ur/dl/dr)");
+		if(s.hasNext()){
+		    dir = s.nextLine();
+		}
+	    
+		if(dir.equals("u")){
+		    kill(getRcor(),getCcor(), -1, 0);
+		}
+		if(dir.equals("d")){
+		    kill(getRcor(),getCcor(), 1, 0);
+		}
+		if(dir.equals("l")){
+		    kill(getRcor(),getCcor(), 0, -1);
+		}
+		if(dir.equals("r")){
+		    kill(getRcor(),getCcor(), 0, 1);
+		}
+		if(dir.equals("ul")){
+		    kill(getRcor(),getCcor(), -1, -1);
+		}
+		if(dir.equals("ur")){
+		    kill(getRcor(),getCcor(), -1, 1);
+		}
+		if(dir.equals("dl")){
+		    kill(getRcor(),getCcor(), 1, -1);
+		}
+		if(dir.equals("dr")){
+		    kill(getRcor(),getCcor(), 1, 1);
+		}
+	    }
+
 	    if(op.equals("m")){
 		System.out.println("Which Way Do You Want To Move? (u/d/l/r/ul/ur/dl/dr)");
 		if(s.hasNext()){
@@ -162,6 +207,7 @@ public class Base{
 		    move(getRcor(),getCcor(), 1, 1);
 		}
 	    }
+
 	    if(op.equals("q")){
 		break;
 	    }

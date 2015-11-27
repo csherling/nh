@@ -36,17 +36,17 @@ public class Archer extends Character{
     // }
 
 
-    public void specialize(){
-	defense -= 10;
-	attack = Math.random() + 0.2; //Randomized accuracy
-    }
+    // public void specialize(){
+    // 	defense -= 10;
+    // 	attack = Math.random() + 0.2; //Randomized accuracy
+    // }
 
-    public int attack(Monster mon){
-     	int damage;
-    	damage = (int)(strength * attack) - mon.getDefense(); // sets damage
-     	mon.lowerHP(damage);
-     	return damage;
-     }
+    // public int attack(Monster mon){
+    //  	int damage;
+    // 	damage = (int)(strength * attack) - mon.getDefense(); // sets damage
+    //  	mon.lowerHP(damage);
+    //  	return damage;
+    //  }
 	
 
 
