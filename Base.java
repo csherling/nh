@@ -13,7 +13,7 @@ public class Base{
     private Monster mon1 = new Monster(4, 4);
 
     public Base(){
-	field = new Tile[9][9];
+	field = new Tile[19][19];
 	flo = new Floor();
 	populate();
 	field[2][2] = you;
@@ -28,11 +28,11 @@ public class Base{
 	 	this.field[i][j] = te;	    
 	    }
 	}
-	for(int k=0; k<9; k++){
+	for(int k=0; k<19; k++){
 	    this.field[k][0] = lwal;
-	    this.field[k][8] = lwal;
+	    this.field[k][18] = lwal;
 	    this.field[0][k] = lwal;
-	    this.field[8][k] = lwal;
+	    this.field[18][k] = lwal;
 	}
     }
 
@@ -358,7 +358,7 @@ public class Base{
 	    }
 	    else{
 		field[mon.getRcor()][mon.getCcor()] = flo;
-		mon = mon1;
+		mon = new Monster(4, 4);
 		mon.setRage((int)(Math.random()*4) - 1);
 		field[4][4] = mon;
 		mon.setHp(10);
